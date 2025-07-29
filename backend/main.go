@@ -17,7 +17,6 @@ type LetterData struct {
 	OpeningBalance string `json:"opening_balance"`
 	TotalSales     string `json:"total_sales"`
 	ClosingBalance string `json:"closing_balance"`
-	ReceiverSig    string `json:"receiver_signature"`
 }
 
 func main() {
@@ -30,21 +29,20 @@ func main() {
 			return
 		}
 
-		r, err := docx.ReadDocxFile("template.docx")
+		r, err := docx.ReadDocxFile("template_updated.docx")
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Template read error"})
 			return
 		}
 		doc := r.Editable()
 
-		doc.Replace("{{receiver_name}}", data.ReceiverName, -1)
-		doc.Replace("{{receiver_addr}}", data.ReceiverAddr, -1)
+		doc.Replace("{{receiver name}}", data.ReceiverName, -1)
+		doc.Replace("{{receiver address}}", data.ReceiverAddr, -1)
 		doc.Replace("{{pan}}", data.PAN, -1)
 		doc.Replace("{{date}}", data.Date, -1)
-		doc.Replace("{{opening_balance}}", data.OpeningBalance, -1)
-		doc.Replace("{{total_sales}}", data.TotalSales, -1)
-		doc.Replace("{{closing_balance}}", data.ClosingBalance, -1)
-		doc.Replace("{{receiver_signature}}", data.ReceiverSig, -1)
+		doc.Replace("{{opening balance}}", data.OpeningBalance, -1)
+		doc.Replace("{{total sales}}", data.TotalSales, -1)
+		doc.Replace("{{closing balance}}", data.ClosingBalance, -1)
 
 		output := "output_" + time.Now().Format("20060102150405") + ".docx"
 		doc.WriteToFile(output)
