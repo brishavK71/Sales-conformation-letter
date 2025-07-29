@@ -28,7 +28,7 @@ export default function App() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://192.168.1.71:8080/generate',
+        'http://172.16.16.39:8080/generate',
         form,
         { responseType: 'arraybuffer' } // 👈 Fix 1: Get binary buffer
       );

@@ -34,15 +34,18 @@ func main() {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Template read error"})
 			return
 		}
+
+		//log.Println(data.ReceiverName, data.ReceiverAddr, data.PAN, data.Date, data.OpeningBalance, data.TotalSales, data.ClosingBalance)
+
 		doc := r.Editable()
 
-		doc.Replace("{{receiver name}}", data.ReceiverName, -1)
-		doc.Replace("{{receiver address}}", data.ReceiverAddr, -1)
-		doc.Replace("{{pan}}", data.PAN, -1)
-		doc.Replace("{{date}}", data.Date, -1)
-		doc.Replace("{{opening balance}}", data.OpeningBalance, -1)
-		doc.Replace("{{total sales}}", data.TotalSales, -1)
-		doc.Replace("{{closing balance}}", data.ClosingBalance, -1)
+		doc.Replace("RECEIVER_NAME", data.ReceiverName, -1)
+		doc.Replace("RECEIVER_ADDRESS", data.ReceiverAddr, -1)
+		doc.Replace("PAN", data.PAN, -1)
+		doc.Replace("DATE", data.Date, -1)
+		doc.Replace("OPENING_BALANCE", data.OpeningBalance, -1)
+		doc.Replace("TOTAL_SALES", data.TotalSales, -1)
+		doc.Replace("CLOSING_BALANCE", data.ClosingBalance, -1)
 
 		output := "output_" + time.Now().Format("20060102150405") + ".docx"
 		doc.WriteToFile(output)
